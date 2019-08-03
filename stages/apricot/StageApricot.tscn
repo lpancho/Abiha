@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://stages/apricot/StageApricot.gd" type="Script" id=1]
+[ext_resource path="res://stages/apricot/Backgrounds.gd" type="Script" id=2]
+[ext_resource path="res://stages/apricot/assets/desert-backgorund.png" type="Texture" id=3]
+[ext_resource path="res://stages/apricot/Enemies-Lower.gd" type="Script" id=4]
+[ext_resource path="res://stages/apricot/Clouds-transparent.gd" type="Script" id=5]
+[ext_resource path="res://stages/apricot/assets/clouds-transparent.png" type="Texture" id=6]
+[ext_resource path="res://player/ship/Ahiba.tscn" type="PackedScene" id=7]
+[ext_resource path="res://stages/apricot/Clouds.gd" type="Script" id=8]
+[ext_resource path="res://stages/apricot/assets/clouds.png" type="Texture" id=9]
+
+[node name="Stage-Apricot" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Backgrounds" type="Node2D" parent="."]
+editor/display_folded = true
+script = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="Backgrounds"]
+scale = Vector2( 1.175, 1.885 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Background2" type="Sprite" parent="Backgrounds"]
+position = Vector2( 0, -512 )
+scale = Vector2( 1.175, 1.885 )
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Enemies-Lower" type="Node2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="Clouds-transparent" type="Node2D" parent="."]
+editor/display_folded = true
+script = ExtResource( 5 )
+
+[node name="clouds-transparent" type="Sprite" parent="Clouds-transparent"]
+scale = Vector2( 1.175, 1 )
+texture = ExtResource( 6 )
+centered = false
+
+[node name="Weapon-Lower" type="Node2D" parent="."]
+
+[node name="Ahiba" parent="." instance=ExtResource( 7 )]
+position = Vector2( 149.735, 436.19 )
+
+[node name="Enemies-Upper" type="Node2D" parent="."]
+
+[node name="Clouds" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+script = ExtResource( 8 )
+
+[node name="cloud" type="Sprite" parent="Clouds"]
+scale = Vector2( 1.175, 1 )
+texture = ExtResource( 9 )
+centered = false
+
+[node name="Weapon-Upper" type="Node2D" parent="."]

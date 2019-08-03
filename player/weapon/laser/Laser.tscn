@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://player/weapon/laser/Laser.gd" type="Script" id=1]
+[ext_resource path="res://powerups/laser/laser-bolts.png" type="Texture" id=2]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.0
+height = 7.0
+
+[sub_resource type="Animation" id=2]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0969396 ),
+"transitions": PoolRealArray( 0.757858, 1 ),
+"update": 1,
+"values": [ 0, 0 ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0969396 ),
+"transitions": PoolRealArray( 0.757858, 1 ),
+"update": 1,
+"values": [ 1, 1 ]
+}
+
+[node name="Laser" type="Area2D" groups=[
+"LASER",
+]]
+position = Vector2( 146.303, 353.18 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Collision" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+vframes = 2
+hframes = 2
+
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/Left_Hit = SubResource( 2 )
+anims/Right_Hit = SubResource( 3 )
+
+[node name="Visibility" type="VisibilityNotifier2D" parent="."]
+[connection signal="area_entered" from="." to="." method="_on_Laser_area_entered"]
+[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_animation_finished"]
+[connection signal="screen_exited" from="Visibility" to="." method="_on_Visibility_screen_exited"]
