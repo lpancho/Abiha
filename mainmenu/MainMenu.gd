@@ -10,5 +10,6 @@ func _ready():
 	pass # Replace with function body.
 
 func _on_Start_pressed():
-	get_tree().change_scene("res://stages/apricot/StageApricot.tscn")
+	var success = get_tree().change_scene("res://stages/apricot/StageApricot.tscn")
+	print("change_scene: ", success)
 	pass # Replace with function body.

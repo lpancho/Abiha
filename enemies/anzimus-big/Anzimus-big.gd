@@ -35,5 +35,6 @@ func _on_Anzimusbig_area_entered(area):
 			$Explosion/Anim.play("Explode")
 
 func _on_Anim_animation_finished(anim_name):
-	queue_free()
+	if anim_name == "Explode":
+		queue_free()
 	pass # Replace with function body.

@@ -1,7 +1,7 @@
 extends Node2D
 
 var number_of_waves = 5
-var current_wave = 1
+var current_wave = 0
 var laser_scn = load("res://player/weapon/laser/Laser.tscn")
 
 onready var backgrounds = $Backgrounds
@@ -20,8 +20,9 @@ func _ready():
 	pass
 
 func _process(delta):
-	if enemies_lower.get_child_count() == 0:
-		# proceed to next wave
+	if current_wave != number_of_waves && enemies_lower.get_child_count() == 0:
+		current_wave += 1
+		enemies_lower.spawn()
 		pass
 	pass
 
@@ -40,8 +41,9 @@ func _on_Anim_Wave_Details_animation_finished(anim_name):
 func _on_Anim_Ahiba_animation_finished(anim_name):
 	if anim_name == "ShowAhiba":
 		
+		# start new wave here
+		current_wave += 1
 		enemies_lower.spawn()
-		
 		backgrounds.enable_process(true)
 		clouds.enable_process(true)
 		clouds_transparent.enable_process(true)

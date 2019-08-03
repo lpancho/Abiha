@@ -12,11 +12,11 @@ var positions = [
 ]
 
 func spawn():
-	var position = positions[0]
+	var position = positions[randi() % positions.size()]
 	var enemies_to_spawn = position.size()
 	var index = 0
 	for i in enemies_to_spawn:
-		var enemy = enemies[0].instance()
+		var enemy = enemies[randi() % enemies.size()].instance()
 		enemy.position = position[index]
 		enemy.connect("shoot", self, "_on_Shoot_Enemy")
 		add_child(enemy)

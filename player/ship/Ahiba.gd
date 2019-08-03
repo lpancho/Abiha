@@ -78,11 +78,13 @@ func _on_Ahiba_area_entered(area):
 	pass # Replace with function body.
 
 func _on_Anim_animation_finished(anim_name):
-	queue_free()
+	if anim_name == "Explode":
+		queue_free()
 	pass # Replace with function body.
 
 func _on_AnimVulnerable_animation_finished(anim_name):
-	can_take_damage = true
+	if anim_name == "Invulnerable":
+		can_take_damage = true
 	pass # Replace with function body.
 
 func enable_process(value):
