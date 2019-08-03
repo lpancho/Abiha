@@ -10,7 +10,8 @@ signal shoot
 
 func _ready():
 	$Explosion.visible = false
-	$Anim.play("Move")
+	$AnimMovement.play("Move")
+	$AnimFrame.play("Move")
 
 func _process(delta):
 	if current_shoot_timer == MAX_SHOOT_TIMER:

@@ -56,7 +56,7 @@ func _process(delta):
 		anim = ANIMS.STEADY
 	
 #	prints(prev_position, position)
-	$Anim.play(anim)
+	$AnimMovement.play(anim)
 	prev_position = ship_pos
 
 func _on_Ahiba_area_entered(area):
@@ -64,7 +64,6 @@ func _on_Ahiba_area_entered(area):
 		print(can_take_damage)
 		print("hi")
 		if can_take_damage:
-			print("here")
 			health -= area.damage
 			if health == 0:
 				$Sprite.visible = false
@@ -72,15 +71,15 @@ func _on_Ahiba_area_entered(area):
 				$Explosion/Anim.play("Explode")
 			else:
 				can_take_damage = false
-				$Anim.play("Invulnerable")
+				$AnimAlpha.play("Invulnerable")
 		else:
 			pass
 	pass # Replace with function body.
 
 func _on_Anim_animation_finished(anim_name):
-	print(anim_name)
-	if anim_name == "Invulnerable":
-		can_take_damage = true
-	if anim_name == "Explode":
-		queue_free()
+	queue_free()
+	pass # Replace with function body.
+
+func _on_AnimVulnerable_animation_finished(anim_name):
+	can_take_damage = true
 	pass # Replace with function body.

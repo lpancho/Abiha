@@ -8,21 +8,6 @@
 radius = 7.0
 height = 0.1
 
-[sub_resource type="Animation" id=7]
-resource_name = "Invulnerable"
-tracks/0/type = "value"
-tracks/0/path = NodePath(".:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
-}
-
 [sub_resource type="Animation" id=2]
 resource_name = "Left"
 length = 0.4
@@ -100,6 +85,21 @@ tracks/0/keys = {
 "values": [ 3, 8 ]
 }
 
+[sub_resource type="Animation" id=7]
+resource_name = "Invulnerable"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0.784314 ), Color( 1, 1, 1, 0.392157 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="Ahiba" type="Area2D" groups=[
 "PLAYER",
 ]]
@@ -118,19 +118,19 @@ hframes = 5
 frame = 7
 
 [node name="AnimMovement" type="AnimationPlayer" parent="."]
-anims/Invulnerable = SubResource( 7 )
 anims/Left = SubResource( 2 )
 anims/Right = SubResource( 3 )
 anims/Steady = SubResource( 4 )
 anims/Turn-Left = SubResource( 5 )
 anims/Turn-Right = SubResource( 6 )
 
-[node name="AnimVulnerable" type="AnimationPlayer" parent="."]
+[node name="AnimAlpha" type="AnimationPlayer" parent="."]
+anims/Invulnerable = SubResource( 7 )
 
 [node name="Explosion" parent="." instance=ExtResource( 3 )]
 frame = 4
 [connection signal="area_entered" from="." to="." method="_on_Ahiba_area_entered"]
-[connection signal="animation_finished" from="AnimMovement" to="." method="_on_Anim_animation_finished"]
+[connection signal="animation_finished" from="AnimAlpha" to="." method="_on_AnimVulnerable_animation_finished"]
 [connection signal="animation_finished" from="Explosion/Anim" to="." method="_on_Anim_animation_finished"]
 
 [editable path="Explosion"]
