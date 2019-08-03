@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://stages/apricot/StageApricot.gd" type="Script" id=1]
 [ext_resource path="res://stages/apricot/Backgrounds.gd" type="Script" id=2]
@@ -9,6 +9,62 @@
 [ext_resource path="res://player/ship/Ahiba.tscn" type="PackedScene" id=7]
 [ext_resource path="res://stages/apricot/Clouds.gd" type="Script" id=8]
 [ext_resource path="res://stages/apricot/assets/clouds.png" type="Texture" id=9]
+
+[sub_resource type="Animation" id=2]
+resource_name = "ShowAhiba"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Ahiba:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.00769228, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 140, 550 ), Vector2( 140, 450 ), Vector2( 140, 475 ) ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "ShowCurrentWave"
+length = 3.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("WAVE:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -125, 235 ), Vector2( 125, 235 ), Vector2( 125, 235 ), Vector2( -125, 235 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("#:rect_position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 170, 535 ), Vector2( 170, 235 ), Vector2( 170, 235 ), Vector2( 170, 535 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Subtitle:rect_position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5, 3, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 395, 260 ), Vector2( 95, 260 ), Vector2( 95, 260 ), Vector2( 395, 260 ) ]
+}
 
 [node name="Stage-Apricot" type="Node2D"]
 script = ExtResource( 1 )
@@ -31,11 +87,11 @@ centered = false
 [node name="Enemies-Lower" type="Node2D" parent="."]
 script = ExtResource( 4 )
 
-[node name="Clouds-transparent" type="Node2D" parent="."]
+[node name="Clouds-Transparent" type="Node2D" parent="."]
 editor/display_folded = true
 script = ExtResource( 5 )
 
-[node name="clouds-transparent" type="Sprite" parent="Clouds-transparent"]
+[node name="clouds-transparent" type="Sprite" parent="Clouds-Transparent"]
 scale = Vector2( 1.175, 1 )
 texture = ExtResource( 6 )
 centered = false
@@ -43,8 +99,7 @@ centered = false
 [node name="Weapon-Lower" type="Node2D" parent="."]
 
 [node name="Ahiba" parent="." instance=ExtResource( 7 )]
-position = Vector2( 149.735, 436.19 )
-z_index = 4
+position = Vector2( 144.19, 583.242 )
 
 [node name="Clouds" type="Node2D" parent="."]
 editor/display_folded = true
@@ -55,4 +110,33 @@ scale = Vector2( 1.175, 1 )
 texture = ExtResource( 9 )
 centered = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="Anim" type="AnimationPlayer" parent="."]
+anims/ShowAhiba = SubResource( 2 )
+
+[node name="Wave-Details" type="Node" parent="."]
+
+[node name="WAVE" type="Label" parent="Wave-Details"]
+margin_left = -125.0
+margin_top = 235.0
+margin_right = -85.0001
+margin_bottom = 249.0
+text = "WAVE"
+
+[node name="#" type="Label" parent="Wave-Details"]
+margin_left = 170.0
+margin_top = 535.0
+margin_right = 210.0
+margin_bottom = 549.0
+text = "#1"
+
+[node name="Subtitle" type="Label" parent="Wave-Details"]
+margin_left = 395.0
+margin_top = 260.0
+margin_right = 524.0
+margin_bottom = 274.0
+text = "Continuously Steady"
+
+[node name="Anim" type="AnimationPlayer" parent="Wave-Details"]
+anims/ShowCurrentWave = SubResource( 1 )
+[connection signal="animation_finished" from="Anim" to="." method="_on_Anim_Ahiba_animation_finished"]
+[connection signal="animation_finished" from="Wave-Details/Anim" to="." method="_on_Anim_Wave_Details_animation_finished"]

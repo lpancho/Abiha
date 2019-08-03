@@ -6,6 +6,7 @@ var children
 var redraw = false
 
 func _ready():
+	enable_process(false)
 	children = get_children()
 
 func _process(delta):
@@ -18,3 +19,6 @@ func _process(delta):
 			else:
 				child.queue_free()
 				children.erase(child)
+
+func enable_process(value):
+	set_process(value)

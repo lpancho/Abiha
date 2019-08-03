@@ -18,11 +18,12 @@ var ANIMS = {
 }
 var anim = ANIMS.STEADY
 
-var move_modifier = 0.2
+var move_modifier = 0.1
 
 signal shoot_laser
 
 func _ready():
+	enable_process(false)
 	prev_position = position
 	pass # Replace with function body.
 
@@ -83,3 +84,6 @@ func _on_Anim_animation_finished(anim_name):
 func _on_AnimVulnerable_animation_finished(anim_name):
 	can_take_damage = true
 	pass # Replace with function body.
+
+func enable_process(value):
+	set_process(value)
