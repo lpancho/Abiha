@@ -17,11 +17,11 @@ func _ready():
 	$Sprite.frame = anim
 
 func _process(delta):
-	var new_position_y = position.y - speed * delta
+	var new_position_y = position.y + speed * delta
 	position.y = new_position_y
 
 func _on_Laser_area_entered(area):
-	if area.is_in_group("ENEMY"):
+	if area.is_in_group("PLAYER"):
 		set_process(false)
 		if anim == ANIMS.LEFT_LASER:
 			$Anim.play("Left_Hit")

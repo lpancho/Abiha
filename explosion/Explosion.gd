@@ -1,5 +1,8 @@
 extends Sprite
 
+func _ready():
+	visible = false
+
 func explode():
 	$Anim.play("Explode")
 

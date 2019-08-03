@@ -1,5 +1,6 @@
 extends Node2D
 
+var laser_scn = load("res://enemies/weapon/laser/Laser.tscn")
 var enemies = [
 	load("res://enemies/anzimus-big/Anzimus-big.tscn")
 ]
@@ -28,8 +29,15 @@ func spawn():
 	for i in enemies_to_spawn:
 		var enemy = enemies[0].instance()
 		enemy.position = position[index]
+		enemy.connect("shoot", self, "_on_Shoot_Enemy")
 		add_child(enemy)
 		index += 1
 
 func enable_process(value):
 	set_process(value)
+
+func _on_Shoot_Enemy(position, damage):
+	var laser = laser_scn.instance()
+	laser.position = position
+	laser.damage = damage
+	get_parent().add_child(laser)
