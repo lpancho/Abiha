@@ -23,6 +23,7 @@ var move_modifier = 0.1
 signal shoot_laser
 
 func _ready():
+	get_parent().get_node("HUD").update_life(health)
 	enable_process(false)
 	prev_position = position
 	pass # Replace with function body.
@@ -65,6 +66,7 @@ func _on_Ahiba_area_entered(area):
 		prints("can_take_damage: ", can_take_damage)
 		if can_take_damage:
 			health -= area.damage
+			get_parent().get_node("HUD").update_life(health)
 			if health == 0:
 				$Sprite.visible = false
 				$Explosion.visible = true

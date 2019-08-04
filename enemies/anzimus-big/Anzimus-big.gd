@@ -5,8 +5,10 @@ var current_shoot_timer = MAX_SHOOT_TIMER
 
 var health = 1
 var damage = 1
+var score = 1
 
 signal shoot
+signal died
 
 func _ready():
 	enable_process(false)
@@ -29,6 +31,7 @@ func _on_Anzimusbig_area_entered(area):
 		health -= area.damage
 		
 		if health == 0:
+			emit_signal("died", score)
 			$Sprite.visible = false
 			$Explosion.visible = true
 			$Explosion/Anim.play("Explode")
@@ -37,7 +40,7 @@ func _on_Anim_animation_finished(anim_name):
 	if anim_name == "Explode":
 		queue_free()
 
-func enable_process(value):
+func enable_process(value) -> void:
 	set_process(value)
 	if value:
 		$AnimMovement.play("Move")

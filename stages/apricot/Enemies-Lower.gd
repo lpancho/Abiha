@@ -22,6 +22,7 @@ func spawn():
 		var enemy = enemies[randi() % enemies.size()].instance()
 		enemy.position = enemy_position[index]
 		enemy.connect("shoot", self, "_on_Shoot_Enemy")
+		enemy.connect("died", self, "_on_Die_Enemy")
 		add_child(enemy)
 		index += 1
 
@@ -30,3 +31,6 @@ func _on_Shoot_Enemy(position, damage):
 	laser.position = position
 	laser.damage = damage
 	get_parent().get_node("Enemy-Projectiles-Lower").add_child(laser)
+
+func _on_Die_Enemy(value):
+	get_parent().get_node("HUD").update_score(value)
