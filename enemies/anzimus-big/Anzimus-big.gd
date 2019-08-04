@@ -9,9 +9,8 @@ var damage = 1
 signal shoot
 
 func _ready():
+	enable_process(false)
 	$Explosion.visible = false
-	$AnimMovement.play("Move")
-	$AnimFrame.play("Move")
 
 func _process(delta):
 	if current_shoot_timer == MAX_SHOOT_TIMER:
@@ -37,4 +36,9 @@ func _on_Anzimusbig_area_entered(area):
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == "Explode":
 		queue_free()
-	pass # Replace with function body.
+
+func enable_process(value):
+	set_process(value)
+	if value:
+		$AnimMovement.play("Move")
+		$AnimFrame.play("Move")

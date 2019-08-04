@@ -22,11 +22,10 @@ func _process(delta):
 
 func _on_Laser_area_entered(area):
 	if area.is_in_group("ENEMY"):
-		set_process(false)
-		if anim == ANIMS.LEFT_LASER:
-			$Anim.play("Left_Hit")
-		elif anim == ANIMS.RIGHT_LASER:
-			$Anim.play("Right_Hit")
+		if !area.get_node("Collision").disabled:
+			if area.health == 0:
+				area.get_node("Collision").set_deferred("disabled", true)
+			remove_from_screen()
 
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == "Left_Hit" || anim_name == "Right_Hit":
@@ -34,4 +33,11 @@ func _on_Anim_animation_finished(anim_name):
 
 func _on_Visibility_screen_exited():
 	queue_free()
-	pass # Replace with function body.
+	pass # Replace with function body
+
+func remove_from_screen():
+	set_process(false)
+	if anim == ANIMS.LEFT_LASER:
+		$Anim.play("Left_Hit")
+	elif anim == ANIMS.RIGHT_LASER:
+		$Anim.play("Right_Hit")

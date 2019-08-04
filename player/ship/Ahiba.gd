@@ -2,11 +2,11 @@ extends Area2D
 
 const MAX_SHOOT_TIMER = 10
 var current_shoot_timer = MAX_SHOOT_TIMER
-
-var can_take_damage = true
+var can_shoot = true
 
 var health = 3
 var damage = 1
+var can_take_damage = true
 
 var prev_position
 var ANIMS = { 
@@ -29,7 +29,7 @@ func _ready():
 
 func _process(delta):	
 	# ship attack
-	if Input.is_action_pressed("ui_left"):
+	if can_shoot && Input.is_action_pressed("ui_left"):
 		if current_shoot_timer == MAX_SHOOT_TIMER:
 			emit_signal("shoot_laser", position, damage)
 			current_shoot_timer = 0
@@ -62,8 +62,7 @@ func _process(delta):
 
 func _on_Ahiba_area_entered(area):
 	if area.is_in_group("ENEMY_LASER"):
-		print(can_take_damage)
-		print("hi")
+		prints("can_take_damage: ", can_take_damage)
 		if can_take_damage:
 			health -= area.damage
 			if health == 0:

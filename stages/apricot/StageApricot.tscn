@@ -1,16 +1,16 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://stages/apricot/StageApricot.gd" type="Script" id=1]
 [ext_resource path="res://stages/apricot/Backgrounds.gd" type="Script" id=2]
 [ext_resource path="res://stages/apricot/assets/desert-backgorund.png" type="Texture" id=3]
 [ext_resource path="res://stages/apricot/Enemies-Lower.gd" type="Script" id=4]
 [ext_resource path="res://stages/apricot/Clouds-transparent.gd" type="Script" id=5]
-[ext_resource path="res://stages/apricot/assets/clouds-transparent.png" type="Texture" id=6]
+[ext_resource path="res://stages/apricot/stage_design/Cloud-transparent.tscn" type="PackedScene" id=6]
 [ext_resource path="res://player/ship/Ahiba.tscn" type="PackedScene" id=7]
 [ext_resource path="res://stages/apricot/Clouds.gd" type="Script" id=8]
-[ext_resource path="res://stages/apricot/assets/clouds.png" type="Texture" id=9]
+[ext_resource path="res://stages/apricot/stage_design/Cloud.tscn" type="PackedScene" id=9]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "ShowAhiba"
 length = 0.4
 tracks/0/type = "value"
@@ -26,8 +26,22 @@ tracks/0/keys = {
 "values": [ Vector2( 140, 550 ), Vector2( 140, 450 ), Vector2( 140, 475 ) ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "ShowCurrentWave"
+[sub_resource type="Animation" id=3]
+resource_name = "ShowEnemies"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Enemies-Lower:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.8, 0.801, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -512 ), Vector2( 0, 40 ), Vector2( 0, 40 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=2]
 length = 3.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("WAVE:rect_position")
@@ -85,35 +99,38 @@ texture = ExtResource( 3 )
 centered = false
 
 [node name="Enemies-Lower" type="Node2D" parent="."]
+position = Vector2( 0, -512 )
 script = ExtResource( 4 )
 
 [node name="Clouds-Transparent" type="Node2D" parent="."]
 editor/display_folded = true
+position = Vector2( 0, -512 )
 script = ExtResource( 5 )
+speed = 180
 
-[node name="clouds-transparent" type="Sprite" parent="Clouds-Transparent"]
-scale = Vector2( 1.175, 1 )
-texture = ExtResource( 6 )
-centered = false
+[node name="clouds-transparent" parent="Clouds-Transparent" instance=ExtResource( 6 )]
 
-[node name="Weapon-Lower" type="Node2D" parent="."]
+[node name="Enemy-Projectiles-Lower" type="Node2D" parent="."]
 
 [node name="Ahiba" parent="." instance=ExtResource( 7 )]
 position = Vector2( 144.19, 583.242 )
 
+[node name="Player-Projectiles-Lower" type="Node2D" parent="."]
+
 [node name="Clouds" type="Node2D" parent="."]
 editor/display_folded = true
+position = Vector2( 0, -512 )
 script = ExtResource( 8 )
+speed = 60
 
-[node name="cloud" type="Sprite" parent="Clouds"]
-scale = Vector2( 1.175, 1 )
-texture = ExtResource( 9 )
-centered = false
+[node name="cloud" parent="Clouds" instance=ExtResource( 9 )]
 
 [node name="Anim" type="AnimationPlayer" parent="."]
-anims/ShowAhiba = SubResource( 2 )
+anims/ShowAhiba = SubResource( 1 )
+anims/ShowEnemies = SubResource( 3 )
 
 [node name="Wave-Details" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="WAVE" type="Label" parent="Wave-Details"]
 margin_left = -125.0
@@ -137,6 +154,6 @@ margin_bottom = 274.0
 text = "Continuously Steady"
 
 [node name="Anim" type="AnimationPlayer" parent="Wave-Details"]
-anims/ShowCurrentWave = SubResource( 1 )
+anims/ShowCurrentWave = SubResource( 2 )
 [connection signal="animation_finished" from="Anim" to="." method="_on_Anim_Ahiba_animation_finished"]
 [connection signal="animation_finished" from="Wave-Details/Anim" to="." method="_on_Anim_Wave_Details_animation_finished"]
