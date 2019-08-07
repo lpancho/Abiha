@@ -68,6 +68,8 @@ func _on_Ahiba_area_entered(area):
 			health -= area.damage
 			get_parent().get_node("HUD").update_life(health)
 			if health == 0:
+				can_shoot = false
+				enable_process(false)
 				$Sprite.visible = false
 				$Explosion.visible = true
 				$Explosion/Anim.play("Explode")
