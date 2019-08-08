@@ -119,7 +119,6 @@ tracks/0/keys = {
 [node name="Ahiba" type="Area2D" groups=[
 "PLAYER",
 ]]
-scale = Vector2( 1.5, 1.5 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true

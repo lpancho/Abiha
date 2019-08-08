@@ -21,6 +21,7 @@ func spawn():
 	for i in enemies_to_spawn:
 		var enemy = enemies[randi() % enemies.size()].instance()
 		enemy.position = enemy_position[index]
+		enemy.current_atmosphere = enemy.atmosphere.LOWER
 		enemy.connect("shoot", self, "_on_Shoot_Enemy")
 		enemy.connect("died", self, "_on_Die_Enemy")
 		add_child(enemy)

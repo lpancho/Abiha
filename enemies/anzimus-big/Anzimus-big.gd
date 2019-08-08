@@ -17,6 +17,9 @@ var ANIMS = {
 	"MOVE": "Move"
 }
 
+enum atmosphere {UPPER, LOWER}
+var current_atmosphere
+
 signal shoot
 signal died
 
@@ -32,12 +35,13 @@ func _process(delta):
 		current_shoot_timer += 1
 
 func _on_Anzimusbig_area_entered(area):
-	if area.is_in_group(GROUPS.PLAYER):
+	var is_same_atmosphere = area.current_atmosphere == current_atmosphere
+	if area.is_in_group(GROUPS.PLAYER) && is_same_atmosphere:
 		area.health -= damage
 		$Sprite.visible = false
 		$Explosion.visible = true
 		$Explosion/Anim.play(ANIMS.EXPLODE)
-	elif area.is_in_group(GROUPS.LASER_PLAYER):
+	elif area.is_in_group(GROUPS.LASER_PLAYER) && is_same_atmosphere:
 		health -= area.damage
 		
 		if health == 0:

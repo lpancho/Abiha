@@ -47,18 +47,19 @@ func _on_Laser_area_entered(area):
 	# check if the laser comes from enemy or player
 	var to_enemy = false
 	var to_player = false
+	var is_same_atmosphere = area.current_atmosphere == current_atmosphere
 	if is_in_group(GROUPS.LASER_ENEMY):
 		to_player = area.is_in_group(GROUPS.PLAYER)
 	elif is_in_group(GROUPS.LASER_PLAYER):
 		to_enemy = area.is_in_group(GROUPS.ENEMY)
 	
 	# currently they have the same contents
-	if to_enemy:
+	if to_enemy && is_same_atmosphere:
 		if !area.get_node("Collision").disabled:
 			if area.health == 0:
 				area.get_node("Collision").set_deferred("disabled", true)
 			remove_from_screen()
-	elif to_player:
+	elif to_player && is_same_atmosphere:
 		if !area.get_node("Collision").disabled:
 			if area.health == 0:
 				area.get_node("Collision").set_deferred("disabled", true)
