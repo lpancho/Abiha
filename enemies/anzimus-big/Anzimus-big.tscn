@@ -42,8 +42,8 @@ tracks/0/keys = {
 }
 
 [node name="Anzimus-big" type="Area2D" groups=[
-"ANZIMUS-BIG",
 "ENEMY",
+"ANZIMUS-BIG",
 ]]
 script = ExtResource( 1 )
 __meta__ = {

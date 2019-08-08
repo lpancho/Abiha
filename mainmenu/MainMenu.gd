@@ -1,12 +1,10 @@
 extends Node2D
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
+var ANIMS = {
+	"MENU_LOAD": "MenuLoad"
+}
 func _ready():
-	$Anim.play("MenuLoad")
+	$Anim.play(ANIMS.MENU_LOAD)
 	pass # Replace with function body.
 
 func _on_Start_pressed():

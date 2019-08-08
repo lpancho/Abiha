@@ -2,7 +2,7 @@ extends Node2D
 
 var number_of_waves = 5
 var current_wave = 0
-var laser_scn = load("res://player/weapon/laser/Laser.tscn")
+var laser_scn = load("res://shared_weapons/laser/Laser.tscn")
 
 onready var backgrounds = $Backgrounds
 onready var clouds_transparent = $"Clouds-Transparent"
@@ -55,10 +55,14 @@ func _process(delta):
 	pass
 
 # Signal methods
-func _on_Ahiba_shoot_laser(player_position, damage):
+func _on_Ahiba_shoot_laser(player_position, damage, atmosphere):
 	var laser = laser_scn.instance()
 	laser.position = player_position
 	laser.damage = damage
+	laser.current_atmosphere = atmosphere
+	if atmosphere == laser.atmosphere.UPPER:
+		laser.scale = Vector2(1.5, 1.5)
+	laser.add_to_group(laser.GROUPS.LASER_PLAYER)
 	$"Player-Projectiles-Lower".add_child(laser)
 
 func _on_Anim_Wave_Details_animation_finished(anim_name):

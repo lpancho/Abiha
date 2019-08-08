@@ -1,6 +1,6 @@
 extends Node2D
 
-var laser_scn = load("res://enemies/weapon/laser/Laser.tscn")
+var laser_scn = load("res://shared_weapons/laser/Laser.tscn")
 var enemies = [
 	load("res://enemies/anzimus-big/Anzimus-big.tscn")
 ]
@@ -30,6 +30,8 @@ func _on_Shoot_Enemy(position, damage):
 	var laser = laser_scn.instance()
 	laser.position = position
 	laser.damage = damage
+	laser.current_atmosphere = laser.atmosphere.LOWER
+	laser.add_to_group(laser.GROUPS.LASER_ENEMY)
 	get_parent().get_node("Enemy-Projectiles-Lower").add_child(laser)
 
 func _on_Die_Enemy(value):

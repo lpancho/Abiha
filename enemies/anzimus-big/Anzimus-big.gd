@@ -7,6 +7,16 @@ var health = 1
 var damage = 1
 var score = 1
 
+var GROUPS = {
+	"PLAYER": "PLAYER",
+	"LASER_PLAYER": "LASER_PLAYER"
+}
+
+var ANIMS = {
+	"EXPLODE": "Explode",
+	"MOVE": "Move"
+}
+
 signal shoot
 signal died
 
@@ -22,26 +32,26 @@ func _process(delta):
 		current_shoot_timer += 1
 
 func _on_Anzimusbig_area_entered(area):
-	if area.is_in_group("PLAYER"):
+	if area.is_in_group(GROUPS.PLAYER):
 		area.health -= damage
 		$Sprite.visible = false
 		$Explosion.visible = true
-		$Explosion/Anim.play("Explode")
-	elif area.is_in_group("LASER"):
+		$Explosion/Anim.play(ANIMS.EXPLODE)
+	elif area.is_in_group(GROUPS.LASER_PLAYER):
 		health -= area.damage
 		
 		if health == 0:
 			emit_signal("died", score)
 			$Sprite.visible = false
 			$Explosion.visible = true
-			$Explosion/Anim.play("Explode")
+			$Explosion/Anim.play(ANIMS.EXPLODE)
 
 func _on_Anim_animation_finished(anim_name):
-	if anim_name == "Explode":
+	if anim_name == ANIMS.EXPLODE:
 		queue_free()
 
 func enable_process(value) -> void:
 	set_process(value)
 	if value:
-		$AnimMovement.play("Move")
-		$AnimFrame.play("Move")
+		$AnimMovement.play(ANIMS.MOVE)
+		$AnimFrame.play(ANIMS.MOVE)
