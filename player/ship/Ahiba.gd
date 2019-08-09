@@ -11,6 +11,7 @@ var can_take_damage = true
 var GROUPS = {
 	"LOWER": "LOWER",
 	"UPPER": "UPPER",
+	"ENEMY": "ENEMY",
 	"LASER_ENEMY": "LASER_ENEMY"
 }
 var ANIMS_OTHER = {
@@ -81,7 +82,24 @@ func _process(delta):
 	prev_position = ship_pos
 
 func _on_Ahiba_area_entered(area):
-	if area.is_in_group(GROUPS.LASER_ENEMY):
+	
+	if area.is_in_group(GROUPS.ENEMY):
+		var is_in_same_atmosphere = area.current_atmosphere == self.current_atmosphere
+		if can_take_damage && is_in_same_atmosphere:
+			health -= area.damage
+			get_parent().get_node("HUD").update_life(health)
+			if health == 0:
+				can_shoot = false
+				enable_process(false)
+				$Sprite.visible = false
+				$Explosion.visible = true
+				$Explosion/Anim.play(ANIMS_OTHER.EXPLODE)
+			else:
+				can_take_damage = false
+				$AnimAlpha.play(ANIMS_PLAYER.INVULNERABLE)
+		else:
+			pass
+	elif area.is_in_group(GROUPS.LASER_ENEMY):
 		
 		var is_in_same_atmosphere = area.current_atmosphere == self.current_atmosphere		
 		if can_take_damage && is_in_same_atmosphere:

@@ -1,6 +1,5 @@
 extends Node2D
 
-
 var cloud_transparent_scn = load("res://stages/apricot/stage_design/Cloud-transparent.tscn")
 
 export var speed = 120

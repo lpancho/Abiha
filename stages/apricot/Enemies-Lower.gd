@@ -5,10 +5,16 @@ var enemies = [
 	load("res://enemies/anzimus-big/Anzimus-big.tscn")
 ]
 
+# Default positions
 var positions = [
 	PoolVector2Array([Vector2(40, 40),Vector2(110, 40),Vector2(180, 40),Vector2(250, 40)]),
 	PoolVector2Array([Vector2(75, 80),Vector2(145, 80),Vector2(215, 80),Vector2(110, 120),Vector2(185, 120),Vector2(145, 160)]),
 	PoolVector2Array([Vector2(40, 40),Vector2(110, 40),Vector2(180, 40),Vector2(250, 40),Vector2(75, 80),Vector2(145, 80),Vector2(215, 80),Vector2(110, 120),Vector2(185, 120),Vector2(145, 160)])
+]
+
+# Paths
+var paths = [
+	load("res://paths/LeftDown_2Zigzag_UpRight.tscn")
 ]
 
 func _ready():
@@ -26,6 +32,15 @@ func spawn():
 		enemy.connect("died", self, "_on_Die_Enemy")
 		add_child(enemy)
 		index += 1
+
+func spawn_with_path():
+	var path = paths[randi() % paths.size()].instance()
+	path.is_testing = false
+	path.distance_to_each = 50
+	path.enemy_scene = enemies[randi() % enemies.size()].instance()
+	path.enemy_weapon_scene = laser_scn.instance()
+	add_child(path)
+	path.enable_process()
 
 func _on_Shoot_Enemy(position, damage):
 	var laser = laser_scn.instance()

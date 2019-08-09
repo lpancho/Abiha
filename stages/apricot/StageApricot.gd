@@ -71,7 +71,7 @@ func _on_Anim_Wave_Details_animation_finished(anim_name):
 			$Anim.play("ShowAhiba")
 		else:
 			enemies_lower.position = Vector2(0, -512)
-			enemies_lower.spawn()
+			enemies_lower.spawn_with_path()
 			enable_background_process(true)
 			$Anim.play("ShowEnemies")
 	pass # Replace with function body.
@@ -80,7 +80,7 @@ func _on_Anim_Ahiba_animation_finished(anim_name):
 	# This will be called for the first time the player gets into the stage
 	if anim_name == "ShowAhiba":
 		current_wave += 1
-		enemies_lower.spawn()
+		enemies_lower.spawn_with_path()
 		enable_background_process(true)
 		ahiba.enable_process(true)
 		$Anim.play("ShowEnemies")

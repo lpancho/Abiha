@@ -32,6 +32,9 @@ func _ready():
 	sprite_pair = randi() % 2
 	# +2 frames because the first two is for the hit anim
 	$Sprite.frame = sprite_pair + 2 
+	
+	if is_in_group(GROUPS.LASER_ENEMY):
+		rotate(deg2rad(180))
 	pass
 
 func _process(delta):

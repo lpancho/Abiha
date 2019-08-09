@@ -6,6 +6,9 @@ var current_shoot_timer = MAX_SHOOT_TIMER
 var health = 1
 var damage = 1
 var score = 1
+var is_to_animate_movement = true
+var is_to_animate_frame = true
+var is_from_path = false
 
 var GROUPS = {
 	"PLAYER": "PLAYER",
@@ -29,15 +32,22 @@ func _ready():
 
 func _process(delta):
 	if current_shoot_timer == MAX_SHOOT_TIMER:
-		emit_signal("shoot", position, damage)
+		var current_position = position
+		if is_from_path:
+			current_position = self.get_parent().position
+		emit_signal("shoot", current_position, damage)
 		current_shoot_timer = 0
 	else:
 		current_shoot_timer += 1
 
 func _on_Anzimusbig_area_entered(area):
 	var is_same_atmosphere = area.current_atmosphere == current_atmosphere
-	if area.is_in_group(GROUPS.PLAYER) && is_same_atmosphere:
-		area.health -= damage
+	if area.is_in_group(GROUPS.PLAYER) && is_same_atmosphere:		
+		if is_from_path:
+			get_parent().set_process(false)
+		else:
+			set_process(false)
+				
 		$Sprite.visible = false
 		$Explosion.visible = true
 		$Explosion/Anim.play(ANIMS.EXPLODE)
@@ -45,6 +55,12 @@ func _on_Anzimusbig_area_entered(area):
 		health -= area.damage
 		
 		if health == 0:
+			
+			if is_from_path:
+				get_parent().set_process(false)
+			else:
+				set_process(false)
+			
 			emit_signal("died", score)
 			$Sprite.visible = false
 			$Explosion.visible = true
@@ -52,10 +68,15 @@ func _on_Anzimusbig_area_entered(area):
 
 func _on_Anim_animation_finished(anim_name):
 	if anim_name == ANIMS.EXPLODE:
-		queue_free()
+		if is_from_path:
+			get_parent().queue_free()
+		else:
+			queue_free()
 
 func enable_process(value) -> void:
 	set_process(value)
 	if value:
-		$AnimMovement.play(ANIMS.MOVE)
-		$AnimFrame.play(ANIMS.MOVE)
+		if is_to_animate_movement:
+			$AnimMovement.play(ANIMS.MOVE)
+		if is_to_animate_frame:
+			$AnimFrame.play(ANIMS.MOVE)
