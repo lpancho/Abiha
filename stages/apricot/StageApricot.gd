@@ -73,7 +73,7 @@ func _on_Anim_Wave_Details_animation_finished(anim_name):
 			enemies_lower.position = Vector2(0, -512)
 			enemies_lower.spawn_with_path()
 			enable_background_process(true)
-			$Anim.play("ShowEnemies")
+#			$Anim.play("ShowEnemies")
 	pass # Replace with function body.
 
 func _on_Anim_Ahiba_animation_finished(anim_name):

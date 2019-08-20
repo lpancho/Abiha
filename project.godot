@@ -19,6 +19,10 @@ config/name="Ahiba"
 run/main_scene="res://mainmenu/MainMenu.tscn"
 config/icon="res://icon.png"
 
+[debug]
+
+gdscript/completion/autocomplete_setters_and_getters=true
+
 [display]
 
 window/size/width=300
